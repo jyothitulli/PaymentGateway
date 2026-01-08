@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+</head>
+<body>
+  <h2>Complete Payment</h2>
+
+  <div id="order"></div>
+
+  <button onclick="payUPI()">Pay via UPI</button>
+  <button onclick="payCard()">Pay via Card</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("order_id");
+
+    fetch(`http://localhost:8000/api/v1/public/orders/${orderId}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("order").innerText =
+          `Amount: ₹${data.amount / 100}`;
+      });
+
+    function payUPI() {
+      fetch("http://localhost:8000/api/v1/public/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_id: orderId,
+          method: "upi",
+          vpa: "user@paytm"
+        })
+      })
+      .then(res => res.json())
+      .then(alertResult);
+    }
+
+    function payCard() {
+      fetch("http://localhost:8000/api/v1/public/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_id: orderId,
+          method: "card",
+          card: {
+            number: "4111111111111111",
+            expiry_month: "12",
+            expiry_year: "2026",
+            cvv: "123",
+            holder_name: "John"
+          }
+        })
+      })
+      .then(res => res.json())
+      .then(alertResult);
+    }
+
+    function alertResult(res) {
+      alert("Payment Status: " + res.status);
+    }
+  </script>
+</body>
+</html>

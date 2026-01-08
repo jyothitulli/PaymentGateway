@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Merchant Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login" id="loginBox">
+  <h2>Merchant Login</h2>
+  <input placeholder="Email" id="email">
+  <input placeholder="Password" type="password">
+  <button onclick="login()">Login</button>
+</div>
+
+<div class="dashboard hidden" id="dashboard">
+  <h2>Dashboard</h2>
+
+  <div class="card">
+    <p><strong>API Key:</strong> <span id="apiKey"></span></p>
+    <p><strong>API Secret:</strong> <span id="apiSecret"></span></p>
+  </div>
+
+  <h3>Transactions</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Payment ID</th>
+        <th>Order ID</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="transactions"></tbody>
+  </table>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
