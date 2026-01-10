@@ -1,64 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Checkout</title>
+  <meta charset="UTF-8" />
+  <title>Secure Checkout</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Complete Payment</h2>
 
-  <div id="order"></div>
+  <div class="checkout-container">
+    <h2>Complete Payment</h2>
 
-  <button onclick="payUPI()">Pay via UPI</button>
-  <button onclick="payCard()">Pay via Card</button>
+    <div class="order-box">
+      <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+      <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
+    </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const orderId = params.get("order_id");
+    <div class="tabs">
+      <button onclick="showUPI()">UPI</button>
+      <button onclick="showCard()">Card</button>
+    </div>
 
-    fetch(`http://localhost:8000/api/v1/public/orders/${orderId}`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("order").innerText =
-          `Amount: ₹${data.amount / 100}`;
-      });
+    <!-- UPI FORM -->
+    <div id="upiForm" class="form">
+      <input type="text" id="vpa" placeholder="username@bank" />
+      <button onclick="payUPI()">Pay Now</button>
+    </div>
 
-    function payUPI() {
-      fetch("http://localhost:8000/api/v1/public/payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          order_id: orderId,
-          method: "upi",
-          vpa: "user@paytm"
-        })
-      })
-      .then(res => res.json())
-      .then(alertResult);
-    }
+    <!-- CARD FORM -->
+    <div id="cardForm" class="form hidden">
+      <input placeholder="Card Number" id="cardNumber" />
+      <input placeholder="MM" id="expMonth" />
+      <input placeholder="YYYY" id="expYear" />
+      <input placeholder="CVV" id="cvv" />
+      <input placeholder="Name on Card" id="name" />
+      <button onclick="payCard()">Pay Now</button>
+    </div>
 
-    function payCard() {
-      fetch("http://localhost:8000/api/v1/public/payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          order_id: orderId,
-          method: "card",
-          card: {
-            number: "4111111111111111",
-            expiry_month: "12",
-            expiry_year: "2026",
-            cvv: "123",
-            holder_name: "John"
-          }
-        })
-      })
-      .then(res => res.json())
-      .then(alertResult);
-    }
+    <div id="status" class="status"></div>
+  </div>
 
-    function alertResult(res) {
-      alert("Payment Status: " + res.status);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

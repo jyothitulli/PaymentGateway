@@ -1,56 +1,40 @@
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #f5f7fb;
 }
 
-.checkout-container {
-  width: 360px;
+.login, .dashboard {
+  width: 400px;
   margin: 60px auto;
   background: white;
-  padding: 25px;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-h2 {
-  text-align: center;
-}
-
-.order-box {
-  background: #eef2ff;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-}
-
-.tabs button {
-  width: 48%;
-  padding: 8px;
-  margin: 1%;
-  cursor: pointer;
-}
-
-.form input {
+input, button {
   width: 100%;
+  margin: 8px 0;
   padding: 8px;
-  margin: 6px 0;
 }
 
-.form button {
-  width: 100%;
-  padding: 10px;
+button {
   background: #4f46e5;
   color: white;
   border: none;
-  border-radius: 5px;
 }
 
 .hidden {
   display: none;
 }
 
-.status {
-  margin-top: 15px;
-  text-align: center;
-  font-weight: bold;
+table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 6px;
 }
